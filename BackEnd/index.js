@@ -1,7 +1,9 @@
 const express = require("express");
-const { paytm } = require("./db");
-const cors = require("cors");
-const app = express();
-const router = require("./routes");
+const User = require("./db/index");
 
-app.use("api/v1", router);
+const app = express();
+const mainRouter = require("./routes/index");
+
+app.use("api/v1", mainRouter);
+app.use(cors());
+app.use(express.json());

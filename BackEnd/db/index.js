@@ -5,15 +5,15 @@ mongoose.connect(
   "mongodb+srv://admin:7uP7XzQTV1ryT8Dj@cluster0.5godjds.mongodb.net/paytm"
 );
 
-const user = mongoose.Schema({
+const userSchema = mongoose.Schema({
   username: String,
   password: String,
   firstName: String,
   lastName: String,
 });
 
-const users = mongoose.model("paytm", user);
+const User = mongoose.model("User", userSchema);
 
 module.exports = {
-  users,
+  User,
 };

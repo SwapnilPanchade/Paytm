@@ -1,6 +1,6 @@
 const express = require("express");
 const User = require("./db/index");
-
+const auth = require("/middleware");
 const app = express();
 const mainRouter = require("./routes/index");
 

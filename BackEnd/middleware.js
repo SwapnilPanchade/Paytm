@@ -12,8 +12,11 @@ const authMiddleware = (req, res, next) => {
   const token = authHeader.spilt(" ")[1];
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    req.userId = decoded.userId;
-    next();
+    if (decoded.userId) {
+      req.userId = decoded.userId;
+      next();
+    }
+    return res.json({ msg: "You are not authorized" });
   } catch (err) {
     return res.status(403).json({
       msg: "you are not authorised",

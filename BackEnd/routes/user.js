@@ -4,6 +4,7 @@ const zod = require("zod");
 const jwt = requre("jsonwebtoken");
 const { User } = require("../db");
 const JWT_SECRET = require("../confing");
+const { authMiddleware } = require("../middleware");
 // router.use("/user", userRouter);
 
 const signupSchema = zod.object({
@@ -81,6 +82,27 @@ router.post("/signin", async (req, res) => {
         res.json(token);
       });
   }
+});
+
+const updateUserSchema = zod.object({
+  password: zod.string().optional(),
+  firstName: zod.string().optional(),
+  lastName: zod.string().optional(),
+});
+
+router.put("/", authMiddleware, async (req, res) => {
+  const { success } = updateUserSchema.safePareser(req.body);
+  if (!success) {
+    return res.status(411).json({
+      msg: "error while updating your information maybe check your username and passoword once again",
+    });
+  }
+
+  await User.updateOne({ _id: req.userId }, req.body).then(
+    res.json({
+      msg: "your information is successfully updated in the system",
+    })
+  );
 });
 
 module.exports = router;

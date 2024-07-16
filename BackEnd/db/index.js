@@ -12,8 +12,15 @@ const userSchema = mongoose.Schema({
   lastName: String,
 });
 
+const accountsSchema = mongoose.Schema({
+  userId: String,
+  balance: Number,
+});
+
 const User = mongoose.model("User", userSchema);
+const Accounts = mongoose.model("Accounts", accountsSchema);
 
 module.exports = {
   User,
+  Accounts,
 };
